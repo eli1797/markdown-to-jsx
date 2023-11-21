@@ -1390,6 +1390,386 @@ describe('lists', () => {
     `)
   })
 
+  it('handles HTML lists', () => {
+    render(
+      compiler(theredoc`
+        <section>
+          <ul>
+            <li>A</li>
+          </ul>
+        </section>
+      `)
+    )
+
+    expect(root.innerHTML).toMatchInlineSnapshot(`
+      <section>
+        <ul>
+          <li>
+            A
+          </li>
+        </ul>
+      </section>
+    `)
+  })
+
+  it('it handles nested HTML lists', () => {
+    render(
+      compiler(theredoc`
+        <div>
+          <ul>
+            <li>
+              A
+              <ul>
+                <li>A1</li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      `)
+    )
+
+    expect(root.innerHTML).toMatchInlineSnapshot(`
+      <div>
+        <ul>
+          <li>
+            A
+            <ul>
+              <li>
+                A1
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    `)
+  })
+
+  it('it handles thrice nested HTML lists', () => {
+    render(
+      compiler(theredoc`
+        <div>
+          <ul>
+            <li>
+              A
+              <ul>
+                <li>
+                  B
+                  <ul>
+                    <li>
+                      C
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      `)
+    )
+
+    expect(root.innerHTML).toMatchInlineSnapshot(`
+      <div>
+        <ul>
+          <li>
+            A
+            <ul>
+              <li>
+                B
+                <ul>
+                  <li>
+                    C
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    `)
+  })
+
+  it('it handles quadruple nested HTML lists', () => {
+    render(
+      compiler(theredoc`
+        <div>
+          <ul>
+            <li>
+              A
+              <ul>
+                <li>
+                  B
+                  <ul>
+                    <li>
+                      C
+                      <ul>
+                        <li>
+                          D
+                        </li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      `)
+    )
+
+    expect(root.innerHTML).toMatchInlineSnapshot(`
+      <div>
+        <ul>
+          <li>
+            A
+            <ul>
+              <li>
+                B
+                <ul>
+                  <li>
+                    C
+                    <ul>
+                      <li>
+                        D
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    `)
+  })
+
+  it('handles unordered HTML lists nested 10 levels deep', () => {
+    render(
+      compiler(theredoc`
+        <div>
+          <ul>
+            <li>
+              Level 1
+              <ul>
+                <li>
+                  Level 2
+                  <ul>
+                    <li>
+                      Level 3
+                      <ul>
+                        <li>
+                          Level 4
+                          <ul>
+                            <li>
+                              Level 5
+                              <ul>
+                                <li>
+                                  Level 6
+                                  <ul>
+                                    <li>
+                                      Level 7
+                                      <ul>
+                                        <li>
+                                          Level 8
+                                          <ul>
+                                            <li>
+                                              Level 9
+                                              <ul>
+                                                <li>
+                                                  Level 10
+                                                </li>
+                                              </ul>
+                                            </li>
+                                          </ul>
+                                        </li>
+                                      </ul>
+                                    </li>
+                                  </ul>
+                                </li>
+                              </ul>
+                            </li>
+                          </ul>
+                        </li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      `)
+    );
+  
+    expect(root.innerHTML).toMatchInlineSnapshot(`
+      <div>
+        <ul>
+          <li>
+            Level 1
+            <ul>
+              <li>
+                Level 2
+                <ul>
+                  <li>
+                    Level 3
+                    <ul>
+                      <li>
+                        Level 4
+                        <ul>
+                          <li>
+                            Level 5
+                            <ul>
+                              <li>
+                                Level 6
+                                <ul>
+                                  <li>
+                                    Level 7
+                                    <ul>
+                                      <li>
+                                        Level 8
+                                        <ul>
+                                          <li>
+                                            Level 9
+                                            <ul>
+                                              <li>
+                                                Level 10
+                                              </li>
+                                            </ul>
+                                          </li>
+                                        </ul>
+                                      </li>
+                                    </ul>
+                                  </li>
+                                </ul>
+                              </li>
+                            </ul>
+                          </li>
+                        </ul>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    `);
+  });
+
+  it('handles mixed HTML lists nested 10 levels deep', () => {
+    render(
+      compiler(theredoc`
+        <div>
+          <ul>
+            <li>
+              Level 1
+              <ol>
+                <li>
+                  Level 2
+                  <ul>
+                    <li>
+                      Level 3
+                      <ol>
+                        <li>
+                          Level 4
+                          <ul>
+                            <li>
+                              Level 5
+                              <ol>
+                                <li>
+                                  Level 6
+                                  <ul>
+                                    <li>
+                                      Level 7
+                                      <ol>
+                                        <li>
+                                          Level 8
+                                          <ul>
+                                            <li>
+                                              Level 9
+                                              <ol>
+                                                <li>
+                                                  Level 10
+                                                </li>
+                                              </ol>
+                                            </li>
+                                          </ul>
+                                        </li>
+                                      </ol>
+                                    </li>
+                                  </ul>
+                                </li>
+                              </ol>
+                            </li>
+                          </ul>
+                        </li>
+                      </ol>
+                    </li>
+                  </ul>
+                </li>
+              </ol>
+            </li>
+          </ul>
+        </div>
+      `)
+    );
+  
+    expect(root.innerHTML).toMatchInlineSnapshot(`
+      <div>
+        <ul>
+          <li>
+            Level 1
+            <ol>
+              <li>
+                Level 2
+                <ul>
+                  <li>
+                    Level 3
+                    <ol>
+                      <li>
+                        Level 4
+                        <ul>
+                          <li>
+                            Level 5
+                            <ol>
+                              <li>
+                                Level 6
+                                <ul>
+                                  <li>
+                                    Level 7
+                                    <ol>
+                                      <li>
+                                        Level 8
+                                        <ul>
+                                          <li>
+                                            Level 9
+                                            <ol>
+                                              <li>
+                                                Level 10
+                                              </li>
+                                            </ol>
+                                          </li>
+                                        </ul>
+                                      </li>
+                                    </ol>
+                                  </li>
+                                </ul>
+                              </li>
+                            </ol>
+                          </li>
+                        </ul>
+                      </li>
+                    </ol>
+                  </li>
+                </ul>
+              </li>
+            </ol>
+          </li>
+        </ul>
+      </div>
+    `);
+  });
+
   it('should handle a mixed nested list', () => {
     render(compiler(['- xyz', '  1. abc', '    - def', '- foo'].join('\n')))
 
