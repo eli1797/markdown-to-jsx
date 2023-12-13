@@ -296,7 +296,7 @@ const HEADING_SETEXT_R = /^([^\n]+)\n *(=|-){3,} *(?:\n *)+\n/
  *    ^ *<
  *
  * 2. Capture the tag name (capture 1)
- *    ([^ >/]+)
+ *    ([a-z][^ >/]*)
  *
  * 3. Ignore a space after the starting tag and capture the attribute portion of the tag (capture 2)
  *     ?([^>]*)\/{0}>
@@ -312,7 +312,7 @@ const HEADING_SETEXT_R = /^([^\n]+)\n *(=|-){3,} *(?:\n *)+\n/
  *    \n*
  */
 const HTML_BLOCK_ELEMENT_R =
-  /^ *(?!<[a-z][^ >/]* ?\/>)<([a-z][^ >/]*) ?([^>]*)\/{0}>\n?(\s*(?:<\1[^>]*?>[\s\S]*?<\/\1>|(?!<\1)[\s\S])*?)<\/\1>\n*/i
+  /^ *(?!<[a-z][^ >/]* ?\/>)<([a-z][^ >/]*) ?([^>]*)\/{0}>\n?(\s*(?:<\1[^>]*?>(\s*(?:<\1[^>]*?>[\s\S]*<\/\1>|(?!<\1>)[\s\S])*?)<\/\1>|(?!<\1>)[\s\S])*?)(<\/\1>)\n*/i
 
 const HTML_CHAR_CODE_R = /&([a-z0-9]+|#[0-9]{1,6}|#x[0-9a-fA-F]{1,6});/gi
 
